@@ -4,7 +4,7 @@ import time
 from math import ceil
 import pickle
 
-os.chdir("C:/Users/riioz/Desktop/questionnaires")
+os.chdir("C:/Users/riioz/Desktop/questionnaire/logs")
 compteur = 0
 questions = []
 solutions = []
@@ -26,9 +26,9 @@ ouinon = ouinon.lower()
 if ouinon == "o":
     print ("Bien.Veuillez entrer le nom du questionnaire")
     nom_questionnaire = input()
-    nom_questionnaire0 = nom_questionnaire + "questions"
-    nom_questionnaire1 = nom_questionnaire + "solutions"
-    nom_questionnaire2 = nom_questionnaire + "compteur"
+    nom_questionnaire0 = nom_questionnaire + "questions.txt"
+    nom_questionnaire1 = nom_questionnaire + "solutions.txt"
+    nom_questionnaire2 = nom_questionnaire + "compteur.txt"
 else:
     while 1:
         print ("Entrez une question.")
@@ -47,9 +47,9 @@ else:
         else:
             print ("Veuiller donner un nom à ce questionnaire")
             nom_questionnaire = input()
-            nom_questionnaire0 = nom_questionnaire + "questions"
-            nom_questionnaire1 = nom_questionnaire + "solutions"
-            nom_questionnaire2 = nom_questionnaire + "compteur"
+            nom_questionnaire0 = nom_questionnaire + "questions.txt"
+            nom_questionnaire1 = nom_questionnaire + "solutions.txt"
+            nom_questionnaire2 = nom_questionnaire + "compteur.txt"
 
             with open (nom_questionnaire0, "wb") as ecriture:
                 ecriture = pickle.Pickler(ecriture)
