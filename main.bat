@@ -1,0 +1,2 @@
+py reciter.py
+pause
