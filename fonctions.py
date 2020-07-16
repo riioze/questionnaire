@@ -2,32 +2,60 @@ from random import randrange
 import os
 import time
 from math import ceil
+from tkinter import *
+from tkinter.filedialog import *
 
-
-
+def continuer():
+	global ouinon
+	fcreer.quit()
+	ouinon="o"
+def terminer():
+	global ouinon
+	fcreer.quit()
+	ouinon="n"
 
 def importer():
-	global nom_questionnaire
-	nom_questionnaire = input("quel questionnaire voulez vous ouvrir?")
+	global filename
+	filename = askopenfilename(title="Ouvrir votre document",filetypes=[('txt files','.txt'),('all files','.*')])
 
 	
 
 
 def creer():
-	global nom_questionnaire
-	print ("Veuiller donner un nom à ce questionnaire")
-	nom_questionnaire = input()
-	file = open(nom_questionnaire+".txt","w")
+	global fcreer
+	global filename
+	fcreer = Tk()
+	lNom = Label(fcreer,text="Veuiller donner un nom à ce questionnaire",width=20)
+	stringvar = StringVar()
+	entryNom = Entry(fcreer,textvariable=stringvar,width=5)
+	Valider = Button(fcreer,text="Valider",command=fcreer.quit)
+	lNom.pack()
+	entryNom.pack()
+	Valider.pack()
+	
+	fcreer.mainloop()
+	filename = entryNom.get()+".txt"	
+	print(entryNom.get())
+	file = open(filename,"w")
 	while 1:
-		print ("Entrez une question sans virgule")
-		question = input()
-		print ("Entrez la réponse sans virgule")
-		reponse = input()
-		reponse = reponse.lower()
+		lQuestion = Label(fcreer,text = "Veuillez entrer une question sans utiliser de virgule",width=30)
+		q = StringVar()
+		questionEntry = Entry(fcreer,textvariable=q,width=30)
+		lReponse = Label(fcreer,text = "Veuillez entrer la réponse sans utiliser de virgule")
+		r = StringVar()
+		reponseEntry = Entry(fcreer,textvariable=r,width=30)
+		c = Button(fcreer,text="Continuer",command=continuer)
+		t = Button(fcreer,text="Terminer",command=terminer)
+		lQuestion.pack()
+		questionEntry.pack()
+		lReponse.pack()
+		reponseEntry.pack()
+		c.pack()
+		t.pack()
+		fcreer.mainloop()
+		question=questionEntry.get()
+		reponse = reponseEntry.get().lower()
 		file.write(question+","+reponse)
-		print ("Continuer? O/N")
-		ouinon = input()
-		ouinon = ouinon.lower()
 		if ouinon == "o":
 
 			continue
@@ -36,7 +64,7 @@ def creer():
 			break
 
 def lancer():
-	file = open(nom_questionnaire+".txt","r")
+	file = open(filename,"r")
 	os.system("cls")
 	time.sleep(1)
 	print ("Voilà. Maintenant, c'est l'heure du test!")
