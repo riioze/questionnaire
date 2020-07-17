@@ -133,4 +133,8 @@ def lancer():
 			time.sleep(2)
 			ftest.quit()
 			ftest.mainloop()
+<<<<<<< HEAD
 			break
+=======
+			break
+>>>>>>> b60c2365780630822a887e067557062588129691
