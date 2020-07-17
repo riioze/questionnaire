@@ -5,6 +5,24 @@ from math import ceil
 from tkinter import *
 from tkinter.filedialog import *
 
+def continuertest():
+	global ouinon
+	global reponse
+	reponse = rEntry.get()
+	reponse = reponse.lower()
+	ftest.quit()
+	ouinon="o"
+
+def terminertest():
+	global ouinon
+	global reponse
+	reponse = rEntry.get()
+	reponse = reponse.lower()
+	ftest.quit()
+	ouinon="n"
+
+
+
 def continuer():
 	global ouinon
 	fcreer.quit()
@@ -55,28 +73,26 @@ def creer():
 		fcreer.mainloop()
 		question=questionEntry.get()
 		reponse = reponseEntry.get().lower()
-		file.write(question+","+reponse)
+		file.write(question+","+reponse+"\n")
 		if ouinon == "o":
-
+			for c in fcreer.winfo_children():
+				c.destroy()
 			continue
 		else:
 			file.close()
 			break
 
 def lancer():
+	global ftest
+	global rEntry
+	ftest = Tk()
 	file = open(filename,"r")
-	os.system("cls")
-	time.sleep(1)
-	print ("Voilà. Maintenant, c'est l'heure du test!")
-	time.sleep(1)
-	print ("Répondez simplement aux questions puis appuyez sur entrée.")
-	time.sleep(2)
+	Intro1 = Label(ftest,text="C'est l'heure du test veuillez répondre aux questions.",width = 50)
+
 	qna = file.read()
 	qna = qna.split('\n')
-	print(qna)
 	qnas = []
 	for x in range(len(qna)):
-		print(qna[x])
 		ligne = qna[x].split(',')
 		qnas.append(ligne)
 	score = 0
@@ -84,32 +100,37 @@ def lancer():
 	while 2:
 
 		n = randrange(len(qnas))
-		print (qnas[n][0])
-		reponse = input("")
-		reponse = reponse.lower()
+		question = Label(ftest,text=qnas[n][0],width=50)
+		rtest = StringVar()
+		rEntry = Entry(ftest,textvariable=rtest,width=30)
+		Continuer = Button(ftest,text="Continuer",command=continuertest)
+		Terminer = Button(ftest,text="Terminer",command=terminertest) 
+		question.pack()
+		rEntry.pack()
+		Continuer.pack()
+		Terminer.pack()
+		ftest.mainloop()
 		if reponse == qnas[n][1]:
-		    print ("Bravo. Vous gagnez un point.")
-		    score += 1
+			message = Label(ftest,text="Bravo. Vous  gagnez un point.",width=30)
+			score += 1
 		else:
-		    print ("Raté. C'était {0} et non {1}.".format(qnas[n][1], reponse))
+			message = Label(ftest,text="Raté. C'était {0} et non {1}.".format(qnas[n][1], reponse),width=30)
+		mscore = Label(ftest,text="Votre score actuel est de {0} sur {1}.".format(score, nombre_reponses),width=30)
+		OK = Button(ftest,text="OK",command=ftest.quit)
+		message.pack()
+		mscore.pack()
+		OK.pack()
 		nombre_reponses += 1
-		time.sleep(1)
-		print ("Votre score actuel est de {0} sur {1}.".format(score, nombre_reponses))
-		time.sleep(1)
-		print ("Voulez-vous continuer? O/N")
-		ouinon = input()
-		ouinon = ouinon.lower()
+		ftest.mainloop()
 		if ouinon == "o":
-		    os.system("cls")
-		    time.sleep(1)
-		    continue
+			for c in ftest.winfo_children():
+				c.destroy()
+			time.sleep(1)
+			continue
 		else:
-		    os.system("cls")
-		    time.sleep(1)
-		    break
-
-	pourcentage = ceil((score/nombre_reponses)*100)
-	print ("Votre score final est de {0} sur {1}, ce qui fait une réussite d'environ {2}%.".format(score, nombre_reponses, pourcentage))
-	time.sleep(3)
-	print ("Au revoir.")
-	time.sleep(3)
+			pourcentage = ceil((score/nombre_reponses)*100)
+			mscorefinal=Label(ftest,text="Votre score final est de {0} sur {1}, ce qui fait une réussite d'environ {2}%.".format(score, nombre_reponses, pourcentage))
+			time.sleep(2)
+			ftest.quit()
+			ftest.mainloop()
+			break
