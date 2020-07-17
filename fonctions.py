@@ -43,9 +43,9 @@ def creer():
 	global fcreer
 	global filename
 	fcreer = Tk()
-	lNom = Label(fcreer,text="Veuiller donner un nom à ce questionnaire",width=20)
+	lNom = Label(fcreer,text="Veuiller donner un nom à ce questionnaire",width=30)
 	stringvar = StringVar()
-	entryNom = Entry(fcreer,textvariable=stringvar,width=5)
+	entryNom = Entry(fcreer,textvariable=stringvar,width=30)
 	Valider = Button(fcreer,text="Valider",command=fcreer.quit)
 	lNom.pack()
 	entryNom.pack()
@@ -91,6 +91,8 @@ def lancer():
 
 	qna = file.read()
 	qna = qna.split('\n')
+	qna.reverse()
+	del qna[0]
 	qnas = []
 	for x in range(len(qna)):
 		ligne = qna[x].split(',')
@@ -133,8 +135,4 @@ def lancer():
 			time.sleep(2)
 			ftest.quit()
 			ftest.mainloop()
-<<<<<<< HEAD
 			break
-=======
-			break
->>>>>>> b60c2365780630822a887e067557062588129691
