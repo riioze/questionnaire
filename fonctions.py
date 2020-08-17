@@ -21,7 +21,14 @@ def terminertest():
 	ftest.quit()
 	ouinon="n"
 
-
+def mcontinuer():
+	global ouinon
+	fModifier.quit()
+	ouinon="o"
+def mterminer():
+	global ouinon
+	fModifier.quit()
+	ouinon="n"
 
 def continuer():
 	global ouinon
@@ -37,6 +44,39 @@ def importer():
 	filename = askopenfilename(title="Ouvrir votre document",filetypes=[('txt files','.txt'),('all files','.*')])
 
 	
+def modifier():
+	global filename
+	global fModifier
+	fModifier = Tk()
+	filename = askopenfilename(title="Ouvrir votre document",filetypes=[('txt files','.txt'),('all files','.*')])
+	file = open(filename,"w+")
+	continuer = True
+	while continuer:
+		lQuestion = Label(fModifier,text = "Veuillez entrer une question sans utiliser de virgule",width=30)
+		q = StringVar()
+		questionEntry = Entry(fModifier,textvariable=q,width=30)
+		lReponse = Label(fModifier,text = "Veuillez entrer la réponse sans utiliser de virgule")
+		r = StringVar()
+		reponseEntry = Entry(fModifier,textvariable=r,width=30)
+		c = Button(fModifier,text="Continuer",command=mcontinuer)
+		t = Button(fModifier,text="Terminer",command=mterminer)
+		lQuestion.pack()
+		questionEntry.pack()
+		lReponse.pack()
+		reponseEntry.pack()
+		c.pack()
+		t.pack()
+		fModifier.mainloop()
+		question=questionEntry.get()
+		reponse = reponseEntry.get().lower()
+		file.write(question+","+reponse+"\n")
+		if ouinon == "o":
+			for c in fModifier.winfo_children():
+				c.destroy()
+			continue
+		else:
+			file.close()
+			break
 
 
 def creer():
